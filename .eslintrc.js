@@ -31,7 +31,9 @@ module.exports = {
     'object-curly-newline': 0,
     'linebreak-style': 0,
     'react/jsx-filename-extension': 0,
+    'react/jsx-closing-bracket-location': 1,
     'import/prefer-default-export': 0,
+    'react/jsx-uses-vars': 2,
     'prettier/prettier': [
       'error',
       {
