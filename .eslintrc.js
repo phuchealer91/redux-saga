@@ -33,7 +33,10 @@ module.exports = {
     'react/jsx-filename-extension': 0,
     'react/jsx-closing-bracket-location': 1,
     'import/prefer-default-export': 0,
+    'import/order': 0,
     'react/jsx-uses-vars': 2,
+    'react/jsx-wrap-multilines': 0,
+    'no-unused-vars': 1,
     'prettier/prettier': [
       'error',
       {

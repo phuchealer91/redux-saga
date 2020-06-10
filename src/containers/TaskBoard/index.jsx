@@ -1,57 +1,45 @@
 import { Button, Container, Grid, withStyles } from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import TaskForm from '../../components/TaskForm';
 import TaskList from '../../components/TaskList';
 import { STATUSES } from '../../contants';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchListTask, filterTask } from '../../actions/task';
+import {
+  showModal,
+  hideModal,
+  changeModalTitle,
+  changeModalContent,
+} from '../../actions/modal';
 import styles from './styles';
+import SearchBox from '../../components/SearchBox';
 
-const listTask = [
-  {
-    id: 1,
-    title: 'Read book',
-    image: 'https://loremflickr.com/320/240',
-    description: 'Read material ui book',
-    status: 0,
-  },
-  {
-    id: 2,
-    title: 'Play food ball',
-    image: 'https://loremflickr.com/320/240',
-    description: 'with my friend',
-    status: 1,
-  },
-  {
-    id: 3,
-    title: 'Go fishing',
-    image: 'https://loremflickr.com/320/240',
-    description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    status: 2,
-  },
-  {
-    id: 4,
-    title: 'Stay at home',
-    image: 'https://loremflickr.com/320/240',
-    description: ' Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    status: 3,
-  },
-];
-function TaskBoard(props) {
-  const { classes } = props;
-  const [open, setOpen] = useState(false);
-  function handleClose() {
-    setOpen(false);
+function TaskBoard({ classes }) {
+  const listTask = useSelector((state) => state.tasks.listTask);
+  const title = useSelector((state) => state.modal.title);
+  const dispatch = useDispatch();
+
+  function onClose() {
+    dispatch(hideModal());
   }
   function hanldeOpen() {
-    setOpen(true);
+    dispatch(showModal());
+    dispatch(changeModalTitle('Thêm công việc'));
+    dispatch(changeModalContent(<TaskForm onClose={onClose} />));
   }
+
+  useEffect(() => {
+    dispatch(fetchListTask());
+  }, []);
   // render Board
   function renderBoard() {
     let xhtml = null;
     xhtml = (
       <Container maxWidth="lg" className={classes.cardGrid}>
         <Grid container spacing={2}>
+          {/* Kiểm tra điều kiện status trong arr */}
           {STATUSES.map((status) => {
             const newList = [...listTask];
             const newListTask = newList.filter(
@@ -73,9 +61,18 @@ function TaskBoard(props) {
   // render Dialog
   function renderDialog() {
     let xhtml = null;
-    xhtml = (
-      <TaskForm open={open} handleClose={handleClose} hanldeOpen={hanldeOpen} />
-    );
+    xhtml = <TaskForm hanldeOpen={hanldeOpen} />;
+    return xhtml;
+  }
+  // onchange filter
+  function handleFilter(e) {
+    const { value } = e.target;
+    dispatch(filterTask(value));
+  }
+  // redner searchBox
+  function renderSearchBox() {
+    let xhtml = null;
+    xhtml = <SearchBox handleChange={handleFilter} />;
     return xhtml;
   }
   return (
@@ -89,8 +86,9 @@ function TaskBoard(props) {
         <AddIcon />
         New Task
       </Button>
+      {renderSearchBox()}
       {renderBoard()}
-      {renderDialog()}
+      {/* {renderDialog()} */}
     </Container>
   );
 }

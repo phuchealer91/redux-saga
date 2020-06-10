@@ -1,7 +1,8 @@
 import { Grid, withStyles } from '@material-ui/core';
 import React from 'react';
-import TaskItem from '../TaskItem/index.jsx';
-import styles from './styles.js';
+import TaskItem from '../TaskItem';
+import PropTypes from 'prop-types';
+import styles from './styles';
 
 function TaskList({ tasks, status, classes }) {
   return (
@@ -13,5 +14,11 @@ function TaskList({ tasks, status, classes }) {
     </Grid>
   );
 }
+
+TaskList.propTypes = {
+  tasks: PropTypes.array,
+  status: PropTypes.object,
+  classes: PropTypes.object,
+};
 
 export default withStyles(styles)(TaskList);

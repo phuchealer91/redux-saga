@@ -11,10 +11,26 @@ import {
 import Fab from '@material-ui/core/Fab';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import styles from './styles';
+import { useSelector } from 'react-redux';
 
+function getCurrentDate() {
+  const newDate = new Date();
+  const date = newDate.getDate();
+  const month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+
+  return `${date} - ${month} - ${year}`;
+}
 function TaskItem({ task, classes }) {
+  const open = useSelector((state) => state.modal.showModal);
+  const [date, setDate] = useState('');
+  useEffect(() => {
+    const separator = new Date();
+    setDate(getCurrentDate(separator));
+  }, []);
   return (
     <Card key={task.id} className={classes.card}>
       <CardHeader
@@ -23,12 +39,12 @@ function TaskItem({ task, classes }) {
             {task.id}
           </Avatar>
         }
-        title="Shrimp and Chorizo Paella"
-        subheader="3-6-2020"
+        title={task.title}
+        subheader={date}
       />
       <CardMedia
         className={classes.media}
-        image="https://source.unsplash.com/random"
+        image={task.imageURL}
         title={task.description}
       />
       <CardContent className={classes.cardContent}>
@@ -44,12 +60,12 @@ function TaskItem({ task, classes }) {
           aria-label="edit"
           className={classes.button}
         >
-          <EditIcon />
+          <EditIcon onClick={open} />
         </Fab>
         <Fab
           color="secondary"
           size="medium"
-          aria-label="edit"
+          aria-label="delete"
           className={classes.button}
         >
           <DeleteIcon />
@@ -58,5 +74,10 @@ function TaskItem({ task, classes }) {
     </Card>
   );
 }
+
+TaskItem.propTypes = {
+  task: PropTypes.object,
+  classes: PropTypes.object,
+};
 
 export default withStyles(styles)(TaskItem);

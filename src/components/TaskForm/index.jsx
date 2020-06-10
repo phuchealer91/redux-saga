@@ -1,57 +1,47 @@
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-  withStyles,
-} from '@material-ui/core';
+import { Box, Button, TextField, withStyles } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import React from 'react';
-import styles from './styles.js';
-function TaskForm({ open, handleClose, classes }) {
+import styles from './styles';
+
+function TaskForm({ onClose, classes }) {
   return (
-    <Dialog
-      open={open}
-      onClose={handleClose}
-      aria-labelledby="form-dialog-title"
-    >
-      <DialogTitle id="form-dialog-title" className={classes.dialogTitle}>
-        Thêm mới công việc
-      </DialogTitle>
-      <DialogContent>
-        <DialogContentText>
-          Please enter your task here. We will send updates occasionally.
-        </DialogContentText>
-        <TextField
-          id="name"
-          label="Tên công việc"
-          type="text"
-          margin="dense"
-          autoFocus
-          fullWidth
-          className={classes.textField}
-        />
-        <TextField
-          id="description"
-          label="Miêu tả công việc"
-          type="text"
-          margin="dense"
-          autoFocus
-          fullWidth
-        />
-      </DialogContent>
-      <DialogActions className={classes.dialogControls}>
-        <Button onClick={handleClose} variant="contained" color="primary">
+    <form action="" className={classes.form}>
+      <TextField
+        id="name"
+        label="Tên công việc"
+        type="text"
+        margin="dense"
+        autoFocus
+        className={classes.textField}
+      />
+      <TextField
+        id="description"
+        label="Miêu tả công việc"
+        type="text"
+        margin="dense"
+        className={classes.textField}
+      />
+
+      <Box className={classes.dialogControls}>
+        <Button onClick={onClose} variant="contained" color="primary">
+          Hủy
+        </Button>
+        <Button
+          onClick={onClose}
+          variant="contained"
+          color="secondary"
+          className={classes.button}
+        >
           Thêm
         </Button>
-        <Button onClick={handleClose} variant="contained" color="secondary">
-          Thoát
-        </Button>
-      </DialogActions>
-    </Dialog>
+      </Box>
+    </form>
   );
 }
+
+TaskForm.propTypes = {
+  classes: PropTypes.object,
+  onClose: PropTypes.func,
+};
 
 export default withStyles(styles)(TaskForm);

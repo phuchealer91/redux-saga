@@ -1,0 +1,32 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "title": "Read reactjs",
+      "imageURL": "https://loremflickr.com/320/240",
+      "description": "with my friends",
+      "status": 0
+    },
+    {
+      "id": 2,
+      "title": "Go fishing",
+      "imageURL": "https://loremflickr.com/320/240",
+      "description": "with my class",
+      "status": 1
+    },
+    {
+      "id": 3,
+      "title": "Pray with Jesu",
+      "imageURL": "https://loremflickr.com/320/240",
+      "description": "with my family",
+      "status": 2
+    },
+    {
+      "id": 4,
+      "title": "Pray with Maria",
+      "imageURL": "https://loremflickr.com/320/240",
+      "description": "with my family",
+      "status": 3
+    }
+  ]
+}
